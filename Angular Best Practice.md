@@ -71,8 +71,10 @@ Another problem with declaring custom components in a HTML page is when you vali
 
 ###AngularJS Best Practice
 ####by Misko Hevery
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/ZhfUv0spHCY/0.jpg)](http://www.youtube.com/watch?v=ZhfUv0spHCY)
+
 Streamed live on 11 Dec 2012
-[Video Url](http://www.youtube.com/watch?v=ZhfUv0spHCY)
+
 [Presentation slides](http://goo.gl/CD0Is)
 
 Live from the Mountain View, CA meetup, Miško Hevery discusses the advantages and disadvantages of various design choices when structuring an app in AngularJS, and some of the best practices that we use in our own development.
