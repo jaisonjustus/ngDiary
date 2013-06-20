@@ -1,4 +1,4 @@
-#Zen of AngularJS 
+#Best Practices for AngularJS 
 Based on Misko Hevery talk about AngularJS best practices. You can find the video on youtube's angular channel. Check the resource for links and more details.
 
 ---
@@ -26,7 +26,7 @@ After minification the controller code will be like this
 	
 	function HomeController(renamed$scope)	{ … };
 	
-Right now we are injecting renamed$scope instead of $scope after minification. But there is a angular way to solve this problem is to use **$inject** property to specify the right service to inject. $inject is an array of service injections. when you specify the injections in $inject it will ignore the parameters passed to the function. Thats how we can solve the problem of injection, when the functions parameter get renamed.
+Right now we are injecting renamed$scope instead of $scope after minification. But there is a angular way to solve this problem is to use **$inject** property to specify the right service to inject. $inject is an array of strings each represents a module/service injection. when you specify the injections in $inject it will ignore the parameters passed to the function. Thats how we can solve the problem of injection, when the functions parameter get renamed.
 
 	var HomeController = function(rename$scope){ … };
 	HomeController.$inject = ['$scope'];
