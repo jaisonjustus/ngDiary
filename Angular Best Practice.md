@@ -1,23 +1,22 @@
-##AngularJS Diary
+#Zen of AngularJS 
+Based on Misko Hevery talk about AngularJS best practices. You can find the video on youtube's angular channel. Check the resource for links and more details.
 
-##Best practices 
-Based on Misko Hevery talk on video on youtube angular channel please check the references for links and more details.
+---
 
+###When end user reports that he saw {{name}} on initial page render and confused.
 
-
-####when you see the {{name}} on initial page render, how to tackle it?
 use **ng-bind** instead of **{{ }}** in index.html. because in index.html the page get render first and the angular files get loaded after or before rendering the page. so what the problem is the user get exposed to angular template expressions.
 
     <span ng-bind="project.length || '?'">?</span>
     
 Also its not required to use ng-bind in views except the home view.
 
-####Do we need minification?
+###Do we need minification or compilation.
 Basically why you go for minification is, when you write a web app based on toolbelts like jQuery most of the code is DOM manipulation related. But in case of Angular DOM manipulations that you write will be a 20% of what you write in applicaitons that mentioned above so the requirment of minification is less needed. But if you consider you code base is too big and required minification, its yes! you can minify your code, but certain things you need to consider while minifying. but better good to turn of variable/parameter renaming option. Because 
 
 **Two Way Binding** is pro technique of AngularJS and its maintined by binding models between view and controller. when ever a change in an attribute in the model object in controller, which is not get updated in the view.. the two binding breaks. This can happen when you minify the js code with variable rename is enabled, it rename the model variable in controller but untouch the view so the binding breaks.
 
-Also in the case of **Dependency Injection** minification affects. In Angular Dependency injection is done by injecting modules or services through the function parameters. When the function parameters get renamed depedency inject fails.
+Also in the case of **Dependency Injection** minification affects. In Angular Dependency injection is done by injecting modules or services through the function parameters. When the function parameters get renamed dependency inject fails.
 
 Consider you have controller to which we inject $scope
 
@@ -27,7 +26,46 @@ After minification the controller code will be like this
 	
 	function HomeController(renamed$scope)	{ … };
 	
-Right now we are injecting renamed$scope instead of $scope after minification. But there is a angular way to solve this problem is to use **$inject** to specify the right service to inject .
+Right now we are injecting renamed$scope instead of $scope after minification. But there is a angular way to solve this problem is to use **$inject** property to specify the right service to inject. $inject is an array of service injections. when you specify the injections in $inject it will ignore the parameters passed to the function. Thats how we can solve the problem of injection, when the functions parameter get renamed.
+
+	var HomeController = function(rename$scope){ … };
+	HomeController.$inject = ['$scope'];
+
+but some time if you are defining angular controller like
+	
+	appModule.controller('HomeController', function($window)	{
+		...
+	});
+	
+while minificationt $window become some thinglike renamed$window and it will be hard to specify the $inject array. so that the solution is bind the controller function to a variable and attach the array of dependencied to $inject and pass the variable to controller method. like
+
+	var HomeControllerFn = function(renamed$window)	{ … };
+	HomeControllerFn.$inject = ['$window'];
+	
+	appModule.controller('HomeController', HomeControllerfn);
+	
+But when you see this piece of code, it looks pretty ugly by binding a function to a variable which is only to attach dependencies. But even for this there is an angular way of doing this.
+
+	appModule.controller('HomeController',['$window',
+	 function(renamed$window)	{ 
+		…
+	 }]);
+	 
+Also never compile `angular.min.js` its already compiled otherwise you dont get the right settings and working get breaks.
+
+###Lets talk about best practice for Templating.
+Simply saying, Angular is a framework which holds static technologies like **HTML** and **CSS** together with **Javascript** in one hand. And it provide the flexiblity to write beautiful html templates. Angular allows to extend the html and turn it into declarative domain specific language by the help of **Directives**. 
+
+Directives help to define a  group of html controls into a component, more than that we can say reusable components. you can declare a component in four ways.
+
+- `<my-component>`  *as an element name*
+- `<div my-component>` *as an attribute of the element*
+- `<div class="my-component">` *as a part to class*
+- `<!-- directive:my-component -->` *as a html comment*
+
+For defining a component you should add a **prefix** like `my-component` or `my:component`. But in case of IE, if you declare the component as `<my-component>` it wont works. What really happening is whenever IE came across an unknow tag it consider it as self closing tag like`<br/>`, so the closing tag `</my-component>` is replace with invalid character like `/my-component`. if we use `<div my-component>` it will works. For IE compatablity check this [page](http://docs.angularjs.org/guide/ie)
+
+Another problem with declaring custom components in a HTML page is when you validate the html document the validation get fails because your custom component is a unknown html tag. For that you can declare the components as `<div x-my-component>` or `<div data-my-component>`.
 
 ##Resources
 
