@@ -67,6 +67,8 @@ For defining a component you should add a **prefix** like `my-component` or `my:
 
 Another problem with declaring custom components in a HTML page is when you validate the html document the validation get fails because your custom component is a unknown html tag. For that you can declare the components as `<div x-my-component>` or `<div data-my-component>`.
 
+###Best Practice in Structuring Business Logic.
+Structuring Business Logic for an angular application most deals with how to define controllers and services. These controllers and services helps to decouple business layer and presentation layer of your application. Controllers provides data and the behaviour for DOM. Its not a good practice to put reference to DOM inside the controller. if you want to share common logic between controllers you can define a service, implies code reusablity. Serivce should represent only business logic and no reference to DOM. Service are not indepented on the presentation layer. Services are singleton and in case of controllers you get each object for each view.
 ##Resources
 
 ###AngularJS Best Practice
