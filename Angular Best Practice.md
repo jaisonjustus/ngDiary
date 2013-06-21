@@ -73,7 +73,9 @@ Structuring Business Logic for an angular application most deals with how to def
 ###Understanding Scope.
 Scope is an object which refers to model. scope will glue the presentation layer with logic layer (view and controller). its good to treat scope object as readable for views and writable for controller. scope object provides API to observer model mutations _($watch)_. Also it provides API to propagte the model changes across the application ecosystem _($apply)_ mainly when you change the model value outside the angular functions like controller, services etc. Scope can be nested and also can be isolated. scope prototypically inherits properties from the parent scope. Scope provide context withrepect to the expression it look through.
 
-
+###Understand Modules.
+Its suggested that there should be only one module per application. we can use thrid party module in our application. Single module per application help during testing phase.
+___
 
 ##Resources
 
