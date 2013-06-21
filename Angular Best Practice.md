@@ -69,6 +69,12 @@ Another problem with declaring custom components in a HTML page is when you vali
 
 ###Best Practice in Structuring Business Logic.
 Structuring Business Logic for an angular application most deals with how to define controllers and services. These controllers and services helps to decouple business layer and presentation layer of your application. Controllers provides data and the behaviour for DOM. Its not a good practice to put reference to DOM inside the controller. if you want to share common logic between controllers you can define a service, implies code reusablity. Serivce should represent only business logic and no reference to DOM. Service are not indepented on the presentation layer. Services are singleton and in case of controllers you get each object for each view.
+
+###Understanding Scope.
+Scope is an object which refers to model. scope will glue the presentation layer with logic layer (view and controller). its good to treat scope object as readable for views and writable for controller. scope object provides API to observer model mutations _($watch)_. Also it provides API to propagte the model changes across the application ecosystem _($apply)_ mainly when you change the model value outside the angular functions like controller, services etc. Scope can be nested and also can be isolated. scope prototypically inherits properties from the parent scope. Scope provide context withrepect to the expression it look through.
+
+
+
 ##Resources
 
 ###AngularJS Best Practice
