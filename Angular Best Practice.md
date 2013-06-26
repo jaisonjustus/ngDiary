@@ -95,4 +95,7 @@ Some of the topics we'll cover:
 - Handling different browsers when writing directives (e.g. IE)
 - Comparisons between different ways of structuring your application: + using controller vs scope + using directive prefix vs namespace + using element name vs attribute name vs class
 
+
+
+
 ----
